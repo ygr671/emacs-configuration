@@ -81,6 +81,29 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
 
+;; Code stuff
+
+;; Autocompletion
+
+;; Eglot configuration
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+	       '(c-mode . ("clangd"))
+	       '(c++-mode . ("clangd"))))
+
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+
+;; VSCodium-like autocompletion interface
+(use-package corfu
+  :init
+  (global-corfu-mode 1)
+  ;; Complete automatically at each keypress
+  (setq corfu-auto t)
+  (setq corfu-echo-delay 0))
+
+
+
 ;; Custom stuff (do not touch unless I know what I am doing)
 
 (custom-set-variables
@@ -88,7 +111,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(consult elcord magit orderless vertico)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
